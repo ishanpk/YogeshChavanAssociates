@@ -211,20 +211,29 @@
         </div>
       </div>
 
-      <div class="featured__progress container" id="featured-progress" aria-label="Chapter progress" role="tablist"></div>
+      <!-- Contained cinema viewer — explore inside the box; page scroll is never hijacked -->
+      <div class="featured-viewer container" id="featured-viewer" tabindex="0" aria-roledescription="carousel" aria-label="Featured project gallery">
+        <p class="featured-viewer__hint" id="featured-hint">
+          <span aria-hidden="true">↔</span>
+          Scroll or swipe inside the frame to explore — your page scroll stays free
+        </p>
 
-      <!-- Desktop: horizontal scroll-driven chapters -->
-      <div class="featured__sequence" id="featured-sequence">
-        <div class="featured__pin">
-          <div class="featured__track" id="featured-track">
-            <!-- Chapters injected by JS -->
+        <div class="featured-viewer__frame" id="featured-frame">
+          <div class="featured-viewer__slides" id="featured-slides" aria-live="polite">
+            <!-- Slides injected by JS -->
           </div>
-        </div>
-      </div>
 
-      <!-- Mobile: vertical chaptered storytelling -->
-      <div class="featured__mobile" id="featured-mobile">
-        <!-- Chapters injected by JS -->
+          <div class="featured-viewer__caption">
+            <span class="featured-viewer__counter" id="featured-counter">01 / 12</span>
+            <h3 class="featured-viewer__chapter-title" id="featured-chapter-title"></h3>
+            <p class="featured-viewer__chapter-text" id="featured-chapter-text"></p>
+          </div>
+
+          <button type="button" class="featured-viewer__arrow featured-viewer__arrow--prev" id="featured-prev" aria-label="Previous image">&#8249;</button>
+          <button type="button" class="featured-viewer__arrow featured-viewer__arrow--next" id="featured-next" aria-label="Next image">&#8250;</button>
+        </div>
+
+        <div class="featured-viewer__thumbs" id="featured-thumbs" role="tablist" aria-label="Jump to image"></div>
       </div>
 
       <div class="featured__cta container">

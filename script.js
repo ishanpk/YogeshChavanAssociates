@@ -44,11 +44,12 @@
     initThemeToggle();
     initMobileCta();
 
+    initFeaturedViewer();
+
     if (!reducedMotion) {
       initSmoothScroll();
       initCustomCursor();
       initMagneticButtons();
-      if (isDesktop) initFeaturedScrollTrigger();
     }
 
     window.addEventListener('resize', debounce(onResize, 250));
@@ -72,8 +73,12 @@
   }
 
   /* =========================================================================
-     FEATURED PROJECT — Desktop horizontal + Mobile vertical
+     FEATURED PROJECT — Contained cinema viewer (no page scroll hijack)
+     Wheel/swipe inside the frame advances chapters; page scroll stays free.
      ========================================================================= */
+  let featuredIndex = 0;
+  let featuredWheelLocked = false;
+
   function renderFeatured() {
     if (!featuredProject) return;
 
@@ -90,51 +95,33 @@
         .join('');
     }
 
-    /* Chapter progress dots */
-    const progressEl = $('#featured-progress');
-    if (progressEl && chapters?.length) {
-      progressEl.innerHTML = chapters.map((_, i) =>
-        `<button class="featured__progress-dot${i === 0 ? ' featured__progress-dot--active' : ''}" data-chapter="${i}" role="tab" aria-label="Chapter ${i + 1} of ${chapters.length}"></button>`
-      ).join('');
-    }
+    const slidesEl = $('#featured-slides');
+    const thumbsEl = $('#featured-thumbs');
 
-    /* Desktop chapters */
-    const track = $('#featured-track');
-    if (track && chapters) {
-      track.innerHTML = chapters.map((ch, i) => `
-        <div class="featured__chapter" data-chapter="${i}">
-          <div class="featured__chapter-img">
-            <img src="${ch.image}" alt="${title} — ${ch.title}, ${location}" loading="lazy" width="1600" height="900">
-          </div>
-          <div class="featured__chapter-text">
-            <h3>${ch.title}</h3>
-            <p>${ch.text}</p>
-          </div>
+    if (slidesEl && chapters?.length) {
+      slidesEl.innerHTML = chapters.map((ch, i) => `
+        <div class="featured-viewer__slide${i === 0 ? ' featured-viewer__slide--active' : ''}" data-index="${i}" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${chapters.length}">
+          <img src="${ch.image}" alt="${title} — ${ch.title}, ${location}" loading="${i === 0 ? 'eager' : 'lazy'}" width="1600" height="900">
         </div>
       `).join('');
     }
 
-    /* Mobile chapters */
-    const mobile = $('#featured-mobile');
-    if (mobile && chapters) {
-      mobile.innerHTML = chapters.map((ch, i) => `
-        <div class="featured__mobile-chapter" data-chapter="${i}">
-          <div class="featured__mobile-img">
-            <img src="${ch.image}" alt="${title} — ${ch.title}" loading="lazy" width="800" height="600">
-          </div>
-          <div class="featured__mobile-text">
-            <h3>${ch.title}</h3>
-            <p>${ch.text}</p>
-          </div>
-        </div>
+    if (thumbsEl && chapters?.length) {
+      thumbsEl.innerHTML = chapters.map((ch, i) => `
+        <button type="button" class="featured-viewer__thumb${i === 0 ? ' featured-viewer__thumb--active' : ''}"
+          data-index="${i}" role="tab" aria-selected="${i === 0}" aria-label="${ch.title}">
+          <img src="${ch.image}" alt="" width="96" height="64" loading="lazy">
+        </button>
       `).join('');
     }
 
-    /* Gallery CTA */
+    featuredIndex = 0;
+    updateFeaturedSlide(0);
+
     const galleryBtn = $('#featured-gallery-btn');
     if (galleryBtn) {
       galleryBtn.addEventListener('click', () => {
-        openLightbox(featuredProject.gallery, featuredProject.title, 0, {
+        openLightbox(featuredProject.gallery, featuredProject.title, featuredIndex, {
           category: featuredProject.category,
           location: featuredProject.location,
           year: featuredProject.year
@@ -143,73 +130,88 @@
     }
   }
 
-  /**
-   * GSAP ScrollTrigger — pinned horizontal scroll sequence (desktop only)
-   * Converts vertical scroll into horizontal pan through project chapters.
-   */
-  function initFeaturedScrollTrigger() {
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  function updateFeaturedSlide(index) {
     if (!featuredProject?.chapters?.length) return;
 
-    gsap.registerPlugin(ScrollTrigger);
+    const chapters = featuredProject.chapters;
+    const total = chapters.length;
+    featuredIndex = ((index % total) + total) % total;
+    const ch = chapters[featuredIndex];
 
-    const sequence = $('#featured-sequence');
-    const track = $('#featured-track');
-    const chapters = $$('.featured__chapter', track);
-    if (!sequence || !track || !chapters.length) return;
-
-    const totalWidth = chapters.length * window.innerWidth;
-
-    gsap.to(track, {
-      x: () => -(totalWidth - window.innerWidth),
-      ease: 'none',
-      scrollTrigger: {
-        trigger: sequence,
-        start: 'top top',
-        end: () => `+=${totalWidth}`,
-        pin: true,
-        scrub: 1,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          const activeIdx = Math.min(
-            Math.floor(progress * chapters.length),
-            chapters.length - 1
-          );
-          chapters.forEach((ch, i) => {
-            ch.classList.toggle('featured__chapter--active', i === activeIdx);
-          });
-          updateFeaturedProgress(activeIdx);
-        }
-      }
+    $$('.featured-viewer__slide').forEach((slide, i) => {
+      slide.classList.toggle('featured-viewer__slide--active', i === featuredIndex);
     });
 
-    /* Parallax on chapter images */
-    chapters.forEach(ch => {
-      const img = $('img', ch);
-      if (!img) return;
-      gsap.to(img, {
-        scale: 1.1,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: ch,
-          containerAnimation: gsap.getById ? undefined : undefined,
-          start: 'left right',
-          end: 'right left',
-          scrub: true
-        }
-      });
+    $$('.featured-viewer__thumb').forEach((thumb, i) => {
+      const active = i === featuredIndex;
+      thumb.classList.toggle('featured-viewer__thumb--active', active);
+      thumb.setAttribute('aria-selected', String(active));
+      if (active) thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     });
 
-    chapters[0]?.classList.add('featured__chapter--active');
-    updateFeaturedProgress(0);
+    const counter = $('#featured-counter');
+    if (counter) {
+      counter.textContent = `${String(featuredIndex + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+    }
+
+    const titleEl = $('#featured-chapter-title');
+    const textEl = $('#featured-chapter-text');
+    if (titleEl) titleEl.textContent = ch.title;
+    if (textEl) textEl.textContent = ch.text;
   }
 
-  function updateFeaturedProgress(activeIdx) {
-    $$('.featured__progress-dot').forEach((dot, i) => {
-      dot.classList.toggle('featured__progress-dot--active', i === activeIdx);
-      dot.setAttribute('aria-selected', String(i === activeIdx));
+  function goFeatured(dir) {
+    updateFeaturedSlide(featuredIndex + dir);
+    $('#featured-hint')?.classList.add('featured-viewer__hint--hidden');
+  }
+
+  function initFeaturedViewer() {
+    const frame = $('#featured-frame');
+    const viewer = $('#featured-viewer');
+    if (!frame || !viewer) return;
+
+    $('#featured-prev')?.addEventListener('click', () => goFeatured(-1));
+    $('#featured-next')?.addEventListener('click', () => goFeatured(1));
+
+    $('#featured-thumbs')?.addEventListener('click', e => {
+      const thumb = e.target.closest('.featured-viewer__thumb');
+      if (!thumb) return;
+      updateFeaturedSlide(parseInt(thumb.dataset.index, 10));
+      $('#featured-hint')?.classList.add('featured-viewer__hint--hidden');
     });
+
+    /* Keyboard when viewer is focused */
+    viewer.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); goFeatured(-1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); goFeatured(1); }
+    });
+
+    /* Wheel inside frame only — does not block page scroll elsewhere */
+    frame.addEventListener('wheel', e => {
+      if (featuredWheelLocked) return;
+      featuredWheelLocked = true;
+      setTimeout(() => { featuredWheelLocked = false; }, 400);
+
+      if (Math.abs(e.deltaY) < 8) return;
+      e.preventDefault();
+      goFeatured(e.deltaY > 0 ? 1 : -1);
+    }, { passive: false });
+
+    /* Touch swipe */
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    frame.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].clientX;
+      touchStartY = e.changedTouches[0].clientY;
+    }, { passive: true });
+
+    frame.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+      goFeatured(dx < 0 ? 1 : -1);
+    }, { passive: true });
   }
 
   /* =========================================================================
@@ -885,16 +887,7 @@
   }
 
   function onResize() {
-    const wasDesktop = isDesktop;
     isDesktop = window.innerWidth >= 1024;
-
-    if (wasDesktop !== isDesktop && !reducedMotion) {
-      /* Refresh ScrollTrigger on breakpoint change */
-      if (typeof ScrollTrigger !== 'undefined') {
-        ScrollTrigger.getAll().forEach(st => st.kill());
-        if (isDesktop) initFeaturedScrollTrigger();
-      }
-    }
   }
 
   function closeMobileMenu() {
