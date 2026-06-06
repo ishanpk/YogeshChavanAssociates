@@ -297,23 +297,35 @@
   }
 
   /* =========================================================================
-     PORTFOLIO GRID
+     PORTFOLIO GRID — compact on mobile, tap-to-zoom lightbox
      ========================================================================= */
+  const WORK_MOBILE_LIMIT = 4;
+  let workExpanded = false;
+
   function renderPortfolio() {
     const grid = $('#work-grid');
     if (!grid) return;
 
     grid.innerHTML = projects
-      .filter(p => !p.featured || true) /* show all including featured */
       .map(p => `
         <article class="project-card" role="listitem" tabindex="0"
           data-category="${p.category}" data-id="${p.id}">
           <div class="project-card__img">
-            <img src="${p.thumbnail}" alt="${p.title} — ${p.category} in ${p.location}" loading="lazy" width="800" height="1000">
-            <div class="project-card__overlay">
+            <img src="${p.thumbnail}" alt="${p.title} — ${p.category} in ${p.location}" loading="lazy" width="400" height="400">
+            <button type="button" class="project-card__zoom" aria-label="View ${p.title} gallery">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/>
+              </svg>
+            </button>
+            <div class="project-card__overlay" aria-hidden="true">
               <h3 class="project-card__title">${p.title}</h3>
               <p class="project-card__meta">${p.category} · ${p.year}</p>
             </div>
+          </div>
+          <div class="project-card__info">
+            <h3 class="project-card__title">${p.title}</h3>
+            <p class="project-card__meta">${p.category} · ${p.year}</p>
+            <span class="project-card__view-link">View gallery →</span>
           </div>
         </article>
       `).join('');
@@ -327,29 +339,64 @@
         });
         btn.classList.add('active');
         btn.setAttribute('aria-selected', 'true');
+        workExpanded = false;
         filterProjects(btn.dataset.filter);
       });
     });
 
-    /* Card interactions */
+    /* Card interactions — image, zoom btn, or card opens lightbox */
     $$('.project-card', grid).forEach(card => {
-      card.addEventListener('click', () => handleProjectClick(card));
+      card.addEventListener('click', e => {
+        if (e.target.closest('.project-card__zoom')) return;
+        handleProjectClick(card);
+      });
       card.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           handleProjectClick(card);
         }
       });
-      /* Mobile tap overlay */
-      if (isTouch) {
-        card.addEventListener('touchstart', () => {
-          $$('.project-card--tapped', grid).forEach(c => c.classList.remove('project-card--tapped'));
-          card.classList.add('project-card--tapped');
-        }, { passive: true });
-      }
+      $('.project-card__zoom', card)?.addEventListener('click', e => {
+        e.stopPropagation();
+        handleProjectClick(card);
+      });
     });
 
+    $('#work-view-all')?.addEventListener('click', () => {
+      workExpanded = true;
+      applyWorkCollapse();
+      $('#work-view-all')?.setAttribute('aria-expanded', 'true');
+    });
+
+    workExpanded = false;
+    applyWorkCollapse();
     initPortfolioObserver();
+  }
+
+  function getVisibleProjectCards() {
+    return $$('.project-card').filter(card => card.style.display !== 'none');
+  }
+
+  function applyWorkCollapse() {
+    const btn = $('#work-view-all');
+    const visible = getVisibleProjectCards();
+
+    if (window.innerWidth >= 768 || workExpanded || visible.length <= WORK_MOBILE_LIMIT) {
+      visible.forEach(card => card.classList.remove('project-card--collapsed'));
+      btn?.classList.add('work__view-all--hidden');
+      btn?.setAttribute('aria-expanded', 'true');
+      return;
+    }
+
+    visible.forEach((card, i) => {
+      card.classList.toggle('project-card--collapsed', i >= WORK_MOBILE_LIMIT);
+    });
+
+    if (btn) {
+      btn.textContent = `View all ${visible.length} projects`;
+      btn.classList.remove('work__view-all--hidden');
+      btn.setAttribute('aria-expanded', 'false');
+    }
   }
 
   function filterProjects(category) {
@@ -358,7 +405,7 @@
       card.style.display = match ? '' : 'none';
       if (match) card.classList.remove('project-card--visible');
     });
-    /* Re-trigger observer for newly visible cards */
+    applyWorkCollapse();
     initPortfolioObserver();
   }
 
@@ -970,6 +1017,7 @@
 
   function onResize() {
     isDesktop = window.innerWidth >= 1024;
+    applyWorkCollapse();
   }
 
   function closeMobileMenu() {
