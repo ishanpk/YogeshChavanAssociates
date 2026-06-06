@@ -4,13 +4,13 @@
     "name": "Ar. Yogesh Chavan",
     "role": "Founder & Principal Architect",
     "bio": "Visionary architect shaping Maharashtra's built environment for over two decades.",
-    "photo": "assets/team/yogesh-chavan.svg",
+    "photo": "assets/team/yogesh-chavan.jpg",
     "featured": true,
     "linkedin": "",
     "fullBio": {
       "education": "B.Arch — <!-- TODO: replace --> University Name",
       "specialization": "Hospitality, Residential & Vastu-compliant Design",
-      "notableProjects": ["Grand Hospitality Complex", "Courtyard Residence", "Educational Campus Block"],
+      "notableProjects": ["Commercial & Residential Building, Sangli", "Kanchan Residence", "Residence for Mr. Sudhakar Ruknar"],
       "quote": "Architecture is not about buildings — it is about the lives lived within them."
     }
   },
