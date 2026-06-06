@@ -1,5 +1,93 @@
 [
   {
+    "id": "curated-interior-collection",
+    "title": "Curated Interior Collection",
+    "category": "Interiors",
+    "location": "Maharashtra, India",
+    "year": "2024",
+    "area": "—",
+    "status": "Completed",
+    "description": "Welcome to Yogesh Chavan Associates — where every piece tells a story and every design is a journey. A curated world of exquisite décor that transforms houses into homes with soul.",
+    "thumbnail": "assets/featured/showcase-01.jpg",
+    "gallery": [
+      "assets/featured/showcase-01.jpg",
+      "assets/featured/showcase-02.jpg",
+      "assets/featured/showcase-03.jpg",
+      "assets/featured/showcase-04.jpg",
+      "assets/featured/showcase-05.jpg",
+      "assets/featured/showcase-06.jpg",
+      "assets/featured/showcase-07.jpg",
+      "assets/featured/showcase-08.jpg",
+      "assets/featured/showcase-09.jpg",
+      "assets/featured/showcase-10.jpg",
+      "assets/featured/showcase-11.jpg",
+      "assets/featured/showcase-12.jpg"
+    ],
+    "featured": true,
+    "chapters": [
+      {
+        "title": "Marble Feature Wall",
+        "text": "A living room anchored by a dramatic marble TV wall — fluted panels, warm wood media console, and soft peach tones create an inviting focal point.",
+        "image": "assets/featured/showcase-01.jpg"
+      },
+      {
+        "title": "Minimalist Lounge",
+        "text": "Clean lines and a neutral palette define this serene lounge — leather seating, stone accents, and natural light in perfect balance.",
+        "image": "assets/featured/showcase-02.jpg"
+      },
+      {
+        "title": "Double-Height Living",
+        "text": "Soaring ceilings and floor-to-ceiling drapes flood this double-height space with light — two-tone sofas and a ribbed timber coffee table complete the scene.",
+        "image": "assets/featured/showcase-03.jpg"
+      },
+      {
+        "title": "Stone Craft",
+        "text": "Every junction tells a story — large-format stone slabs with precise dry-cladding clips, where materiality becomes architecture.",
+        "image": "assets/featured/showcase-04.jpg"
+      },
+      {
+        "title": "TV Wall Design",
+        "text": "Fluted panels meet veined marble in a TV wall composition that balances warmth, texture, and contemporary restraint.",
+        "image": "assets/featured/showcase-05.jpg"
+      },
+      {
+        "title": "Kitchen & Dining",
+        "text": "A lavender-toned kitchen with gold accents — bespoke cabinetry, polished surfaces, and a dining set designed for everyday elegance.",
+        "image": "assets/featured/showcase-06.jpg"
+      },
+      {
+        "title": "Custom Storage",
+        "text": "Floor-to-ceiling taupe cabinetry with mirrored jaali panels — storage that doubles as sculpture in a refined dining environment.",
+        "image": "assets/featured/showcase-07.jpg"
+      },
+      {
+        "title": "Jaali & Staircase",
+        "text": "Traditional jaali screens meet modern glass-and-timber staircases — heritage motifs woven into contemporary open-plan living.",
+        "image": "assets/featured/showcase-08.jpg"
+      },
+      {
+        "title": "Terracotta Living",
+        "text": "A burnt-orange Chesterfield anchors this living room — fluted walls, wood ceiling coffers, and a window nook designed for quiet moments.",
+        "image": "assets/featured/showcase-09.jpg"
+      },
+      {
+        "title": "Material Palette",
+        "text": "Stone, wood, and fluted panel in dialogue — a TV wall where every surface is chosen for tactile richness and visual calm.",
+        "image": "assets/featured/showcase-10.jpg"
+      },
+      {
+        "title": "Chesterfield Suite",
+        "text": "Tufted velvet, glossy white tables, and layered neutrals — a living suite where comfort and sophistication coexist effortlessly.",
+        "image": "assets/featured/showcase-11.jpg"
+      },
+      {
+        "title": "Study Nook",
+        "text": "A floating desk, curved shelf, and mandala-etched wardrobe panels — a workspace designed for focus within a calming interior world.",
+        "image": "assets/featured/showcase-12.jpg"
+      }
+    ]
+  },
+  {
     "id": "akshay-gavli-commercial",
     "title": "Commercial & Residential Building",
     "category": "Commercial",
@@ -12,38 +100,11 @@
     "gallery": [
       "assets/projects/commercial-1.jpg",
       "assets/projects/commercial-1b.jpg",
-      "assets/featured/hotel-3.jpg",
-      "assets/featured/hotel-4.jpg",
+      "assets/projects/residence-3.jpg",
+      "assets/projects/residence-3c.jpg",
       "assets/projects/commercial-2.jpg"
     ],
-    "featured": true,
-    "chapters": [
-      {
-        "title": "Design Vision",
-        "text": "A four-story mixed-use building combining commercial retail at ground level with residential floors above — designed for maximum street presence and natural ventilation in Sangli.",
-        "image": "assets/featured/hotel-1.jpg"
-      },
-      {
-        "title": "Facade Composition",
-        "text": "Vertical beige louvers rhythm the middle floors while a marble-veined top floor frame creates a distinctive crown — every element calibrated for shade, privacy, and visual impact.",
-        "image": "assets/featured/hotel-2.jpg"
-      },
-      {
-        "title": "Built Reality",
-        "text": "From 3D visualization to on-site execution — the Kanchan residence nearby demonstrates how YCA translates rendered vision into lived architectural experience.",
-        "image": "assets/featured/hotel-3.jpg"
-      },
-      {
-        "title": "Material Craft",
-        "text": "Stone cladding, geometric screens, and warm wood accents — material junctions executed with the precision that defines every YCA project.",
-        "image": "assets/featured/hotel-4.jpg"
-      },
-      {
-        "title": "On Site",
-        "text": "Active construction across Sangli — our team on ground ensuring every floor, every opening, every finish matches the design intent.",
-        "image": "assets/featured/hotel-5.jpg"
-      }
-    ]
+    "featured": false
   },
   {
     "id": "sudhakar-ruknar-residence",

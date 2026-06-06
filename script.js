@@ -85,8 +85,17 @@
     const metaEl = $('#featured-meta');
     if (metaEl) {
       metaEl.innerHTML = [location, category, area, year, status]
+        .filter(t => t && t !== '—')
         .map(t => `<span class="meta-tag">${t}</span>`)
         .join('');
+    }
+
+    /* Chapter progress dots */
+    const progressEl = $('#featured-progress');
+    if (progressEl && chapters?.length) {
+      progressEl.innerHTML = chapters.map((_, i) =>
+        `<button class="featured__progress-dot${i === 0 ? ' featured__progress-dot--active' : ''}" data-chapter="${i}" role="tab" aria-label="Chapter ${i + 1} of ${chapters.length}"></button>`
+      ).join('');
     }
 
     /* Desktop chapters */
@@ -170,6 +179,7 @@
           chapters.forEach((ch, i) => {
             ch.classList.toggle('featured__chapter--active', i === activeIdx);
           });
+          updateFeaturedProgress(activeIdx);
         }
       }
     });
@@ -192,6 +202,14 @@
     });
 
     chapters[0]?.classList.add('featured__chapter--active');
+    updateFeaturedProgress(0);
+  }
+
+  function updateFeaturedProgress(activeIdx) {
+    $$('.featured__progress-dot').forEach((dot, i) => {
+      dot.classList.toggle('featured__progress-dot--active', i === activeIdx);
+      dot.setAttribute('aria-selected', String(i === activeIdx));
+    });
   }
 
   /* =========================================================================
