@@ -30,19 +30,11 @@
     }
   },
   {
-    "id": "team-group-studio",
+    "id": "team-photo",
     "tier": "group",
-    "name": "Studio Team",
-    "role": "Design · Interiors · Coordination",
-    "caption": "Architects, interior designers, and project managers collaborating in our Sangli studio.",
+    "name": "YCA Team",
+    "role": "Architecture · Interiors · Engineering",
+    "caption": "Our full studio and on-site team in Sangli.",
     "photo": "assets/team/team-group-studio.svg"
-  },
-  {
-    "id": "team-group-site",
-    "tier": "group",
-    "name": "On-Site Team",
-    "role": "Execution · Quality · Supervision",
-    "caption": "Site engineers and supervisors ensuring every build matches the design intent.",
-    "photo": "assets/team/team-group-site.svg"
   }
 ]

@@ -1,0 +1,16 @@
+{
+  "name": "yogeshchavanassociates",
+  "version": "1.0.0",
+  "description": "A single-page, editorial-grade website for **Yogesh Chavan Associates** — Architectural Designers · Interiors · Engineers, based in Sangli, Maharashtra.",
+  "main": "script.js",
+  "scripts": {
+    "audit": "node scripts/audit-site.mjs",
+    "audit:local": "BASE_URL=http://127.0.0.1:8765/ node scripts/audit-site.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "playwright": "^1.60.0"
+  }
+}

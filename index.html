@@ -32,7 +32,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body>
   <!-- Skip to content — accessibility -->
@@ -313,18 +313,18 @@
     </section>
 
     <!-- Team -->
-    <section class="team section section--compact" id="team">
+    <section class="team section section--compact team--minimal" id="team">
       <div class="container">
         <span class="section__label">The People</span>
         <h2 class="section__title section__title--compact">Meet the Team</h2>
-        <p class="team__intro">Principal architect and chief engineer, backed by our studio and on-site teams.</p>
 
-        <div class="team__leads" id="team-leads" role="list">
-          <!-- Lead cards injected by JS -->
-        </div>
-
-        <div class="team__group" id="team-group" aria-label="Team group photos">
-          <!-- Group photos injected by JS -->
+        <div class="team__strip" id="team-strip">
+          <div class="team__leads" id="team-leads" role="list">
+            <!-- Lead cards injected by JS -->
+          </div>
+          <div class="team__photo" id="team-photo" aria-label="Team photo">
+            <!-- Team photo injected by JS -->
+          </div>
         </div>
       </div>
     </section>
@@ -655,6 +655,6 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
   <!-- Lenis smooth scroll -->
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
-  <script src="script.js" defer></script>
+  <script src="script.js?v=3" defer></script>
 </body>
 </html>

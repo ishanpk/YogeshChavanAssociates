@@ -48,14 +48,13 @@ Replace every placeholder below before going live. Search the codebase for `TODO
 
 ## Team Members (`team.json`)
 
-The team section shows **two lead profiles** (Principal Architect + Chief Engineer) and **two group photos** (studio team + on-site team).
+The team section shows **two lead profiles** (Principal Architect + Chief Engineer) and **one team photo**.
 
 | Member / Asset | Placeholder | Field |
 |--------|-------------|-------|
 | Chief Engineer | `<!-- TODO: replace --> Chief Engineer Name` | `name`, `fullBio.education`, `photo` |
 | Yogesh Chavan education | `<!-- TODO: replace --> University Name` | `fullBio.education` |
-| Studio group photo | `assets/team/team-group-studio.svg` | Replace with a real team photo (16:9) |
-| On-site group photo | `assets/team/team-group-site.svg` | Replace with a real team photo (16:9) |
+| Team photo | `assets/team/team-group-studio.svg` | Replace with a real group photo (wide 21:9) |
 
 ---
 

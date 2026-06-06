@@ -58,11 +58,18 @@
   /* =========================================================================
      DATA LOADING
      ========================================================================= */
+  function assetVersion() {
+    const v = document.querySelector('script[src*="script.js"]')?.src.split('v=')[1];
+    return v ? `?v=${v}` : '';
+  }
+
   async function loadData() {
     try {
+      const cacheBust = assetVersion();
+      const fetchOpts = { cache: 'no-store' };
       const [projRes, teamRes] = await Promise.all([
-        fetch('projects.json'),
-        fetch('team.json')
+        fetch(`projects.json${cacheBust}`, fetchOpts),
+        fetch(`team.json${cacheBust}`, fetchOpts)
       ]);
       projects = await projRes.json();
       team = await teamRes.json();
@@ -437,41 +444,37 @@
   }
 
   /* =========================================================================
-     TEAM — leads + group photos
+     TEAM — 2 leads + 1 team photo
      ========================================================================= */
   function renderTeam() {
     const leadsEl = $('#team-leads');
-    const groupEl = $('#team-group');
-    if (!leadsEl || !groupEl) return;
+    const photoEl = $('#team-photo');
+    if (!leadsEl || !photoEl) return;
 
-    const leads = team.filter(m => m.tier === 'lead');
-    const groups = team.filter(m => m.tier === 'group');
+    const leads = team.filter(m => m.tier === 'lead').slice(0, 2);
+    const group = team.find(m => m.tier === 'group');
 
     leadsEl.innerHTML = leads.map(member => `
       <article class="team-lead" role="listitem" tabindex="0" data-id="${member.id}">
         <div class="team-lead__face">
-          <img src="${member.photo}" alt="${member.name}" loading="lazy" width="120" height="120">
+          <img src="${member.photo}" alt="${member.name}" loading="lazy" width="80" height="80">
         </div>
         <div class="team-lead__body">
           <h3 class="team-lead__name">${member.name}</h3>
           <p class="team-lead__role">${member.role}</p>
-          <span class="team-lead__tap">Tap for bio →</span>
+          <span class="team-lead__tap">Bio →</span>
         </div>
       </article>
     `).join('');
 
-    groupEl.innerHTML = groups.map(group => `
-      <figure class="team-group-photo">
-        <div class="team-group-photo__img">
-          <img src="${group.photo}" alt="${group.name}" loading="lazy" width="800" height="450">
-        </div>
-        <figcaption class="team-group-photo__info">
-          <h3 class="team-group-photo__name">${group.name}</h3>
-          <p class="team-group-photo__role">${group.role}</p>
-          <p class="team-group-photo__caption">${group.caption}</p>
+    photoEl.innerHTML = group ? `
+      <figure class="team-photo">
+        <img src="${group.photo}" alt="${group.name}" loading="lazy" width="800" height="320">
+        <figcaption class="team-photo__caption">
+          <strong>${group.name}</strong> · ${group.role}
         </figcaption>
       </figure>
-    `).join('');
+    ` : '';
 
     $$('.team-lead', leadsEl).forEach(card => {
       const open = () => openTeamPanel(card.dataset.id);
