@@ -1,0 +1,139 @@
+[
+  {
+    "id": "grand-hotel-sangli",
+    "title": "Grand Hospitality Complex",
+    "category": "Hospitality",
+    "location": "Sangli, Maharashtra",
+    "year": "2023",
+    "area": "45,000 sqft",
+    "status": "Completed",
+    "description": "A landmark hospitality destination blending contemporary Indian aesthetics with world-class guest experiences. The design celebrates local materiality while delivering international standards of comfort and elegance.",
+    "thumbnail": "assets/projects/hotel-cover.svg",
+    "gallery": [
+      "assets/featured/hotel-1.svg",
+      "assets/featured/hotel-2.svg",
+      "assets/featured/hotel-3.svg",
+      "assets/featured/hotel-4.svg",
+      "assets/featured/hotel-5.svg"
+    ],
+    "featured": true,
+    "chapters": [
+      {
+        "title": "Exterior Vision",
+        "text": "The facade commands the skyline with layered terraces, deep overhangs, and locally sourced stone — a contemporary interpretation of Maharashtra's architectural heritage.",
+        "image": "assets/featured/hotel-1.svg"
+      },
+      {
+        "title": "Grand Entrance",
+        "text": "A double-height lobby welcomes guests through a procession of light, water, and crafted timber — setting the tone for the experience within.",
+        "image": "assets/featured/hotel-2.svg"
+      },
+      {
+        "title": "Interior Narrative",
+        "text": "Warm terracotta tones, brass accents, and handwoven textiles create intimate spaces that feel both luxurious and deeply rooted in place.",
+        "image": "assets/featured/hotel-3.svg"
+      },
+      {
+        "title": "Material Details",
+        "text": "Every junction, every joint tells a story of craftsmanship — from custom metalwork to artisanal plaster finishes developed with local masons.",
+        "image": "assets/featured/hotel-4.svg"
+      },
+      {
+        "title": "Night Presence",
+        "text": "Strategic lighting transforms the building into a beacon of hospitality — a glowing landmark visible across the Sangli skyline.",
+        "image": "assets/featured/hotel-5.svg"
+      }
+    ]
+  },
+  {
+    "id": "modern-residence-kolhapur",
+    "title": "Courtyard Residence",
+    "category": "Residential",
+    "location": "Kolhapur, Maharashtra",
+    "year": "2024",
+    "area": "4,200 sqft",
+    "status": "Completed",
+    "description": "A private family home organized around a central courtyard, balancing Vastu principles with open, light-filled contemporary living.",
+    "thumbnail": "assets/projects/residence-1.svg",
+    "gallery": ["assets/projects/residence-1.svg", "assets/projects/residence-2.svg"],
+    "featured": false
+  },
+  {
+    "id": "urban-villa-sangli",
+    "title": "Urban Villa",
+    "category": "Residential",
+    "location": "Sangli, Maharashtra",
+    "year": "2023",
+    "area": "3,800 sqft",
+    "status": "Completed",
+    "description": "Compact urban living reimagined — vertical gardens, rooftop terrace, and seamless indoor-outdoor transitions on a tight city plot.",
+    "thumbnail": "assets/projects/residence-2.svg",
+    "gallery": ["assets/projects/residence-2.svg"],
+    "featured": false
+  },
+  {
+    "id": "retail-complex",
+    "title": "Retail & Office Complex",
+    "category": "Commercial",
+    "location": "Sangli, Maharashtra",
+    "year": "2022",
+    "area": "18,000 sqft",
+    "status": "Completed",
+    "description": "Mixed-use development with ground-floor retail and upper-level office spaces, designed for maximum visibility and natural ventilation.",
+    "thumbnail": "assets/projects/commercial-1.svg",
+    "gallery": ["assets/projects/commercial-1.svg", "assets/projects/commercial-2.svg"],
+    "featured": false
+  },
+  {
+    "id": "boutique-interiors",
+    "title": "Boutique Interior Suite",
+    "category": "Interiors",
+    "location": "Pune, Maharashtra",
+    "year": "2024",
+    "area": "2,100 sqft",
+    "status": "Completed",
+    "description": "Bespoke interior design featuring custom furniture, curated art, and a material palette drawn from the Western Ghats landscape.",
+    "thumbnail": "assets/projects/interior-1.svg",
+    "gallery": ["assets/projects/interior-1.svg"],
+    "featured": false
+  },
+  {
+    "id": "educational-campus",
+    "title": "Educational Campus Block",
+    "category": "Institutional",
+    "location": "Miraj, Maharashtra",
+    "year": "2021",
+    "area": "32,000 sqft",
+    "status": "Completed",
+    "description": "A learning environment designed around natural light, cross-ventilation, and flexible classroom configurations for evolving pedagogies.",
+    "thumbnail": "assets/projects/institutional-1.svg",
+    "gallery": ["assets/projects/institutional-1.svg"],
+    "featured": false
+  },
+  {
+    "id": "hillside-retreat",
+    "title": "Hillside Retreat",
+    "category": "Residential",
+    "location": "Satara, Maharashtra",
+    "year": "2023",
+    "area": "5,500 sqft",
+    "status": "Under Construction",
+    "description": "A weekend retreat perched on the Sahyadri foothills — cantilevered decks, panoramic glazing, and locally quarried basalt stone.",
+    "thumbnail": "assets/projects/residence-3.svg",
+    "gallery": ["assets/projects/residence-3.svg"],
+    "featured": false
+  },
+  {
+    "id": "hospitality-lounge",
+    "title": "Hospitality Lounge",
+    "category": "Hospitality",
+    "location": "Kolhapur, Maharashtra",
+    "year": "2024",
+    "area": "6,800 sqft",
+    "status": "Completed",
+    "description": "An intimate dining and lounge space with dramatic ceiling heights, custom lighting design, and artisanal wall treatments.",
+    "thumbnail": "assets/projects/hospitality-1.svg",
+    "gallery": ["assets/projects/hospitality-1.svg"],
+    "featured": false
+  }
+]

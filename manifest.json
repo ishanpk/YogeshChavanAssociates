@@ -1,0 +1,17 @@
+{
+  "name": "Yogesh Chavan Associates",
+  "short_name": "YCA",
+  "description": "Architectural Designers · Interiors · Engineers in Sangli, Maharashtra",
+  "start_url": "/YogeshChavanAssociates/",
+  "display": "standalone",
+  "background_color": "#F5F2EC",
+  "theme_color": "#0E0E0C",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ishanpk.github.io/YogeshChavanAssociates/sitemap.xml
