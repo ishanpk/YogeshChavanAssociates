@@ -460,9 +460,12 @@
           <img src="${member.photo}" alt="${member.name}" loading="lazy" width="80" height="80">
         </div>
         <div class="team-lead__body">
-          <h3 class="team-lead__name">${member.name}</h3>
-          <p class="team-lead__role">${member.role}</p>
-          <span class="team-lead__tap">Bio →</span>
+          <h3 class="team-lead__name">${member.nameMr ? `<span lang="mr">${member.nameMr}</span> · ` : ''}${member.name}</h3>
+          <p class="team-lead__role">
+            ${member.roleMr ? `<span lang="mr" class="team-lead__role-mr">${member.roleMr}</span>` : ''}
+            <span class="team-lead__role-en">${member.role}</span>
+          </p>
+          <span class="team-lead__tap" lang="mr">माहिती →</span>
         </div>
       </article>
     `).join('');
@@ -470,8 +473,8 @@
     photoEl.innerHTML = group ? `
       <figure class="team-photo">
         <img src="${group.photo}" alt="${group.name}" loading="lazy" width="800" height="320">
-        <figcaption class="team-photo__caption">
-          <strong>${group.name}</strong> · ${group.role}
+        <figcaption class="team-photo__caption team-photo__caption-mr" lang="mr">
+          <strong>${group.nameMr || group.name}</strong> · ${group.roleMr || group.role}
         </figcaption>
       </figure>
     ` : '';
@@ -500,7 +503,9 @@
     photo.alt = member.name;
     photo.classList.add('team-panel__photo--face');
     $('#team-panel-name').textContent = member.name;
-    $('.team-panel__role', panel).textContent = member.role;
+    $('.team-panel__role', panel).innerHTML = member.roleMr
+      ? `<span lang="mr">${member.roleMr}</span> · ${member.role}`
+      : member.role;
 
     $('.team-panel__details', panel).innerHTML = `
       <p class="team-panel__bio">${member.bio}</p>
@@ -709,39 +714,51 @@
     {
       number: '01',
       milestone: 'Discovery',
+      milestoneMr: 'समजून घेणे',
       title: 'Consultation & Site Visit',
+      titleMr: 'सल्लामसलत आणि साइट भेट',
       summary: 'We listen to your vision, assess the site, and align on scope, budget, and timeline.',
+      summaryMr: 'तुमची कल्पना, साइट आणि बजेट समजून घेऊन प्रकल्पाची दिशा ठरवतो.',
       icon: 'assets/icons/process-consult.svg'
     },
     {
       number: '02',
       milestone: 'Concept',
+      milestoneMr: 'संकल्पना',
       title: 'Concept & Design Development',
+      titleMr: 'संकल्पना आणि डिझाइन',
       summary: 'Sketches, 3D views, and material palettes translate ideas into a space you can feel.',
+      summaryMr: 'स्केच, ३डी दृश्य आणि साहित्य — कल्पना अनुभवता येणाऱ्या जागेत रूपांतरित.',
       icon: 'assets/icons/process-design.svg'
     },
     {
       number: '03',
       milestone: 'Documentation',
+      milestoneMr: 'कागदपत्रे',
       title: 'Detailed Drawings & Approvals',
+      titleMr: 'सविस्तर रेखाचित्रे आणि मंजुरी',
       summary: 'Working drawings, structural design, and liaison with authorities — handled end to end.',
+      summaryMr: 'कामकाजाची रेखाचित्रे, संरचना आणि प्राधिकरण मंजुरी — सर्व एकाच ठिकाणी.',
       icon: 'assets/icons/process-drawings.svg'
     },
     {
       number: '04',
       milestone: 'Delivery',
+      milestoneMr: 'हस्तांतरण',
       title: 'Execution & Handover',
+      titleMr: 'अंमलबजावणी आणि हस्तांतरण',
       summary: 'On-site supervision and quality checks until your keys are in hand.',
+      summaryMr: 'साइटवर देखरेख आणि गुणवत्ता तपासणी — चाव्या हातात येईपर्यंत.',
       icon: 'assets/icons/process-execution.svg'
     }
   ];
 
   const PROCESS_BADGES = [
-    'Start your journey',
-    'First milestone unlocked',
-    'Halfway there — great progress!',
-    'Almost at handover',
-    'Process complete — ready to build?'
+    { mr: 'प्रवास सुरू करा', en: 'Start your journey' },
+    { mr: 'पहिला टप्पा पूर्ण', en: 'First milestone unlocked' },
+    { mr: 'अर्ध्या वाटेचे काम झाले!', en: 'Halfway there — great progress!' },
+    { mr: 'हस्तांतरण जवळ आले', en: 'Almost at handover' },
+    { mr: 'प्रक्रिया पूर्ण — बांधकाम सुरू करू?', en: 'Process complete — ready to build?' }
   ];
 
   function initProcessJourney() {
@@ -763,7 +780,7 @@
           <img class="process-journey__node-icon" src="${step.icon}" alt="" width="20" height="20">
           <span class="process-journey__node-check" aria-hidden="true">✓</span>
         </span>
-        <span class="process-journey__node-label">${step.milestone}</span>
+        <span class="process-journey__node-label" lang="mr">${step.milestoneMr}</span>
       </button>
     `).join('');
 
@@ -779,12 +796,16 @@
           <div class="process-journey__card-header">
             <img class="process-journey__card-icon" src="${step.icon}" alt="" width="40" height="40">
             <div>
-              <span class="process-journey__card-number">Step ${step.number}</span>
-              <h3 class="process-journey__card-title">${step.title}</h3>
-              <span class="process-journey__card-milestone">${step.milestone}</span>
+              <span class="process-journey__card-number">टप्पा ${step.number} · Step ${step.number}</span>
+              <h3 class="process-journey__card-title">
+                <span lang="mr" class="process-journey__card-title-mr">${step.titleMr}</span>
+                ${step.title}
+              </h3>
+              <span class="process-journey__card-milestone" lang="mr">${step.milestoneMr}</span>
             </div>
           </div>
-          <p>${step.summary}</p>
+          <p lang="mr">${step.summaryMr}</p>
+          <p class="process-journey__card-summary-en">${step.summary}</p>
         </article>
       `;
     }
@@ -810,11 +831,15 @@
       }
 
       prevBtn.disabled = current === 0;
-      nextBtn.textContent = current === total - 1 ? 'Start again' : 'Next step →';
+      nextBtn.innerHTML = current === total - 1
+        ? '<span lang="mr">पुन्हा सुरू</span><span class="btn__en">Start again</span>'
+        : '<span lang="mr">पुढील टप्पा</span><span class="btn__en">Next step →</span>';
 
       const explored = visited.size;
-      count.textContent = `${explored} of ${total} explored`;
-      badge.textContent = explored === total ? PROCESS_BADGES[4] : PROCESS_BADGES[Math.min(explored, PROCESS_BADGES.length - 2)];
+      const badgeIdx = explored === total ? 4 : Math.min(explored, PROCESS_BADGES.length - 2);
+      const badgeData = PROCESS_BADGES[badgeIdx];
+      count.innerHTML = `<span lang="mr">${explored} पैकी ${total} पाहिले</span> · ${explored} of ${total} explored`;
+      badge.innerHTML = `<span lang="mr">${badgeData.mr}</span> · ${badgeData.en}`;
       badge.classList.toggle('process-journey__badge--complete', explored === total);
     }
 
