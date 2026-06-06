@@ -16,8 +16,7 @@
   --font-display: 'Cormorant Garamond', Georgia, serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  --font-marathi: 'Tiro Devanagari Marathi', 'Noto Sans Devanagari', sans-serif;
-  --font-marathi-display: 'Yatra One', 'Tiro Devanagari Marathi', cursive;
+  --font-accent-mr: 'Yatra One', cursive;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-expo: cubic-bezier(0.7, 0, 0.84, 0);
@@ -117,10 +116,12 @@ ul { list-style: none; }
 }
 
 .section__label {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.35rem 0.5rem;
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--clay);
   margin-bottom: 1rem;
 }
 
@@ -143,280 +144,6 @@ ul { list-style: none; }
 
 .section__title--compact {
   margin-bottom: 0.75rem;
-}
-
-/* --- Marathi / bilingual typography --- */
-[lang="mr"],
-.lang-mr {
-  font-family: var(--font-marathi);
-  font-feature-settings: "locl" 1;
-}
-
-.section__label-mr {
-  font-family: var(--font-marathi-display);
-  font-size: 1rem;
-  letter-spacing: 0.02em;
-  text-transform: none;
-  color: var(--clay);
-  line-height: 1.2;
-}
-
-.section__label-en {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--stone);
-  opacity: 0.85;
-}
-
-.section__title-mr {
-  display: block;
-  font-family: var(--font-marathi-display);
-  font-size: clamp(1.35rem, 4vw, 2.25rem);
-  font-weight: 400;
-  line-height: 1.2;
-  color: var(--clay);
-  margin-bottom: 0.35rem;
-  letter-spacing: 0.01em;
-}
-
-.section__title-en {
-  display: block;
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 500;
-  line-height: 1.15;
-  color: var(--ink);
-}
-
-.section__title-en em {
-  font-style: italic;
-  color: var(--clay);
-}
-
-.section__title:has(.section__title-mr) {
-  font-size: inherit;
-  font-family: inherit;
-  font-weight: inherit;
-  line-height: inherit;
-  color: inherit;
-}
-
-.section__title--compact .section__title-mr {
-  font-size: clamp(1.15rem, 3.5vw, 1.65rem);
-}
-
-.section__title--compact .section__title-en {
-  font-size: clamp(1.65rem, 4vw, 2.5rem);
-}
-
-.hero__brand-mr {
-  font-family: var(--font-marathi-display);
-  font-size: clamp(1.5rem, 5vw, 2.75rem);
-  color: var(--brass);
-  line-height: 1.15;
-  margin-bottom: 0.35rem;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
-}
-
-.hero__eyebrow-mr {
-  display: block;
-  font-family: var(--font-marathi);
-  font-size: clamp(0.85rem, 2vw, 1rem);
-  letter-spacing: 0.04em;
-  margin-bottom: 0.35rem;
-  opacity: 0.95;
-}
-
-.hero__eyebrow-en {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  opacity: 0.75;
-}
-
-.hero__tagline-mr {
-  display: block;
-  font-family: var(--font-marathi);
-  font-size: clamp(1rem, 2.5vw, 1.2rem);
-  line-height: 1.45;
-  margin-bottom: 0.35rem;
-}
-
-.hero__tagline-en {
-  display: block;
-  font-size: 0.9rem;
-  opacity: 0.8;
-}
-
-.btn__mr {
-  display: block;
-  font-family: var(--font-marathi);
-  font-size: 0.95em;
-  line-height: 1.2;
-}
-
-.btn__en {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 0.65em;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0.75;
-  margin-top: 0.15rem;
-}
-
-.marquee__mr {
-  font-family: var(--font-marathi-display);
-  letter-spacing: 0.02em;
-}
-
-.mobile-menu__link-mr {
-  display: block;
-  font-family: var(--font-marathi-display);
-  font-size: clamp(2rem, 8vw, 3rem);
-  line-height: 1.1;
-}
-
-.mobile-menu__link-en {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  opacity: 0.55;
-  margin-top: 0.25rem;
-}
-
-.service-card h3 .service-card__mr {
-  display: block;
-  font-family: var(--font-marathi-display);
-  font-size: 1.15rem;
-  color: var(--clay);
-  margin-bottom: 0.15rem;
-  font-weight: 400;
-}
-
-.stats__label-mr {
-  display: block;
-  font-family: var(--font-marathi);
-  font-size: 0.72rem;
-  color: var(--clay);
-  margin-bottom: 0.15rem;
-}
-
-.studio__services li {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-}
-
-.studio__service-mr {
-  font-family: var(--font-marathi-display);
-  font-size: 1rem;
-  color: var(--clay);
-}
-
-.process__intro-mr {
-  display: block;
-  font-family: var(--font-marathi);
-  font-size: 1rem;
-  line-height: 1.55;
-  margin-bottom: 0.35rem;
-  color: var(--ink);
-}
-
-.process-journey__node-label-mr {
-  font-family: var(--font-marathi);
-  font-size: 0.58rem;
-  line-height: 1.15;
-  max-width: 4.5rem;
-}
-
-.process-journey__card-title-mr {
-  display: block;
-  font-family: var(--font-marathi-display);
-  font-size: 1rem;
-  color: var(--clay);
-  margin: 0.2rem 0 0.15rem;
-  line-height: 1.25;
-}
-
-.team-lead__role-mr {
-  display: block;
-  font-family: var(--font-marathi);
-  font-size: 0.62rem;
-  color: var(--clay);
-  line-height: 1.2;
-  text-transform: none;
-  letter-spacing: 0;
-}
-
-.team-lead__role-en {
-  display: block;
-  font-size: 0.5rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  opacity: 0.7;
-}
-
-.team-photo__caption-mr {
-  font-family: var(--font-marathi);
-}
-
-.footer__tagline-mr {
-  display: block;
-  font-family: var(--font-marathi-display);
-  font-size: 1.05rem;
-  color: var(--clay);
-  margin-bottom: 0.25rem;
-}
-
-.featured .section__label-mr {
-  color: var(--brass);
-}
-
-.featured .section__title-mr {
-  color: var(--brass);
-}
-
-.featured__title-mr {
-  font-family: var(--font-marathi-display);
-  font-size: clamp(1.1rem, 3vw, 1.5rem);
-  color: var(--brass);
-  opacity: 0.9;
-  margin-top: -0.5rem;
-  margin-bottom: 1rem;
-}
-
-.process__intro-en {
-  display: block;
-  font-size: 0.85rem;
-  color: var(--stone);
-  line-height: 1.55;
-}
-
-.process-journey__card-summary-en {
-  margin-top: 0.65rem;
-  font-size: 0.82rem;
-  color: var(--stone);
-  opacity: 0.85;
-}
-
-.studio__caption span[lang="mr"] {
-  display: block;
-  font-family: var(--font-marathi);
-  font-size: 0.85rem;
-  color: var(--clay);
-  margin-top: 0.15rem;
-}
-
-.process-journey__badge [lang="mr"],
-.process-journey__count [lang="mr"] {
-  font-family: var(--font-marathi);
 }
 
 /* --- Skip Link --- */
@@ -2104,6 +1831,10 @@ ul { list-style: none; }
 }
 
 .team-lead__role {
+  font-size: 0.55rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--clay);
   margin: 0.1rem 0 0;
   line-height: 1.2;
 }

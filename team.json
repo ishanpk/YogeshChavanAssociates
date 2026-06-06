@@ -3,9 +3,7 @@
     "id": "yogesh-chavan",
     "tier": "lead",
     "name": "Ar. Yogesh Chavan",
-    "nameMr": "आर्क. योगेश चव्हाण",
     "role": "Principal Architect",
-    "roleMr": "प्रमुख वास्तुविद",
     "bio": "Visionary architect shaping Maharashtra's built environment for over two decades.",
     "photo": "assets/team/yogesh-chavan.jpg",
     "linkedin": "",
@@ -20,9 +18,7 @@
     "id": "chief-engineer",
     "tier": "lead",
     "name": "<!-- TODO: replace --> Chief Engineer Name",
-    "nameMr": "<!-- TODO: replace --> मुख्य अभियंता",
     "role": "Chief Engineer",
-    "roleMr": "मुख्य अभियंता",
     "bio": "Leading structural design and technical oversight across every project typology.",
     "photo": "assets/team/structural-engineer.svg",
     "linkedin": "",
@@ -37,11 +33,8 @@
     "id": "team-photo",
     "tier": "group",
     "name": "YCA Team",
-    "nameMr": "वायसीए टीम",
     "role": "Architecture · Interiors · Engineering",
-    "roleMr": "वास्तुकला · आंतरिक · अभियांत्रिकी",
     "caption": "Our full studio and on-site team in Sangli.",
-    "captionMr": "सांगलीतील आमची संपूर्ण स्टुडिओ आणि साइट टीम.",
     "photo": "assets/team/team-group-studio.svg"
   }
 ]

@@ -166,15 +166,6 @@ for (const vp of viewports) {
     issues.push(`${vp.name}: script.js missing cache-bust query param`);
   }
 
-  const marathiHeadings = await page.locator('.section__title-mr').count();
-  const marathiHero = await page.locator('.hero__brand-mr').count();
-  if (marathiHeadings < 6) {
-    issues.push(`${vp.name}: expected Marathi section headings, found ${marathiHeadings}`);
-  }
-  if (marathiHero === 0) {
-    issues.push(`${vp.name}: hero Marathi brand line missing`);
-  }
-
   results.push({
     viewport: vp.name,
     scriptSrc,
