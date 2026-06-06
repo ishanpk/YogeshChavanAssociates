@@ -78,6 +78,8 @@
      ========================================================================= */
   let featuredIndex = 0;
   let featuredWheelLocked = false;
+  let featuredAnimating = false;
+  let featuredDirection = 1;
 
   function renderFeatured() {
     if (!featuredProject) return;
@@ -115,8 +117,16 @@
       `).join('');
     }
 
+    const dotsEl = $('#featured-dots');
+    if (dotsEl && chapters?.length) {
+      dotsEl.innerHTML = chapters.map((ch, i) => `
+        <button type="button" class="featured-viewer__dot${i === 0 ? ' featured-viewer__dot--active' : ''}"
+          data-index="${i}" role="tab" aria-selected="${i === 0}" aria-label="${ch.title}"></button>
+      `).join('');
+    }
+
     featuredIndex = 0;
-    updateFeaturedSlide(0);
+    updateFeaturedUI(false);
 
     const galleryBtn = $('#featured-gallery-btn');
     if (galleryBtn) {
@@ -130,17 +140,13 @@
     }
   }
 
-  function updateFeaturedSlide(index) {
+  function updateFeaturedUI(animateCaption = true) {
     if (!featuredProject?.chapters?.length) return;
 
     const chapters = featuredProject.chapters;
     const total = chapters.length;
-    featuredIndex = ((index % total) + total) % total;
     const ch = chapters[featuredIndex];
-
-    $$('.featured-viewer__slide').forEach((slide, i) => {
-      slide.classList.toggle('featured-viewer__slide--active', i === featuredIndex);
-    });
+    const counterText = `${String(featuredIndex + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
 
     $$('.featured-viewer__thumb').forEach((thumb, i) => {
       const active = i === featuredIndex;
@@ -149,20 +155,89 @@
       if (active) thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     });
 
-    const counter = $('#featured-counter');
-    if (counter) {
-      counter.textContent = `${String(featuredIndex + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+    $$('.featured-viewer__dot').forEach((dot, i) => {
+      const active = i === featuredIndex;
+      dot.classList.toggle('featured-viewer__dot--active', active);
+      dot.setAttribute('aria-selected', String(active));
+    });
+
+    const progressFill = $('#featured-progress-fill');
+    if (progressFill) {
+      progressFill.style.width = `${((featuredIndex + 1) / total) * 100}%`;
     }
 
+    const counter = $('#featured-counter');
+    const mobCounter = $('#featured-mob-counter');
+    if (counter) counter.textContent = counterText;
+    if (mobCounter) mobCounter.textContent = counterText;
+
+    const caption = $('#featured-caption');
     const titleEl = $('#featured-chapter-title');
     const textEl = $('#featured-chapter-text');
-    if (titleEl) titleEl.textContent = ch.title;
-    if (textEl) textEl.textContent = ch.text;
+
+    const applyCaption = () => {
+      if (titleEl) titleEl.textContent = ch.title;
+      if (textEl) textEl.textContent = ch.text;
+      caption?.classList.remove('featured-viewer__caption--changing');
+    };
+
+    if (animateCaption && caption && !reducedMotion) {
+      caption.classList.add('featured-viewer__caption--changing');
+      setTimeout(applyCaption, 220);
+    } else {
+      applyCaption();
+    }
   }
 
-  function goFeatured(dir) {
-    updateFeaturedSlide(featuredIndex + dir);
+  function goFeatured(dir, targetIndex) {
+    if (!featuredProject?.chapters?.length || featuredAnimating) return;
+
+    const total = featuredProject.chapters.length;
+    const nextIndex = targetIndex !== undefined
+      ? ((targetIndex % total) + total) % total
+      : ((featuredIndex + dir) % total + total) % total;
+
+    if (nextIndex === featuredIndex) return;
+
+    featuredDirection = nextIndex > featuredIndex ? 1 : -1;
+    if (targetIndex !== undefined && Math.abs(nextIndex - featuredIndex) > total / 2) {
+      featuredDirection = nextIndex < featuredIndex ? 1 : -1;
+    }
+
+    animateFeaturedTo(nextIndex);
     $('#featured-hint')?.classList.add('featured-viewer__hint--hidden');
+  }
+
+  function animateFeaturedTo(nextIndex) {
+    const currentSlide = $(`.featured-viewer__slide[data-index="${featuredIndex}"]`);
+    const nextSlide = $(`.featured-viewer__slide[data-index="${nextIndex}"]`);
+    if (!nextSlide) return;
+
+    if (reducedMotion) {
+      currentSlide?.classList.remove('featured-viewer__slide--active');
+      nextSlide.classList.add('featured-viewer__slide--active');
+      featuredIndex = nextIndex;
+      updateFeaturedUI(false);
+      return;
+    }
+
+    featuredAnimating = true;
+
+    currentSlide?.classList.remove('featured-viewer__slide--active');
+    currentSlide?.classList.add(featuredDirection > 0 ? 'featured-viewer__slide--exit-left' : 'featured-viewer__slide--exit-right');
+
+    nextSlide.classList.remove('featured-viewer__slide--exit-left', 'featured-viewer__slide--exit-right');
+    nextSlide.classList.add(featuredDirection > 0 ? 'featured-viewer__slide--enter-right' : 'featured-viewer__slide--enter-left');
+
+    featuredIndex = nextIndex;
+    updateFeaturedUI(true);
+
+    setTimeout(() => {
+      currentSlide?.classList.remove('featured-viewer__slide--exit-left', 'featured-viewer__slide--exit-right');
+      nextSlide.classList.remove('featured-viewer__slide--enter-left', 'featured-viewer__slide--enter-right');
+      nextSlide.classList.add('featured-viewer__slide--active');
+      featuredAnimating = false;
+    }, 750);
   }
 
   function initFeaturedViewer() {
@@ -172,12 +247,19 @@
 
     $('#featured-prev')?.addEventListener('click', () => goFeatured(-1));
     $('#featured-next')?.addEventListener('click', () => goFeatured(1));
+    $('#featured-mob-prev')?.addEventListener('click', () => goFeatured(-1));
+    $('#featured-mob-next')?.addEventListener('click', () => goFeatured(1));
 
     $('#featured-thumbs')?.addEventListener('click', e => {
       const thumb = e.target.closest('.featured-viewer__thumb');
       if (!thumb) return;
-      updateFeaturedSlide(parseInt(thumb.dataset.index, 10));
-      $('#featured-hint')?.classList.add('featured-viewer__hint--hidden');
+      goFeatured(0, parseInt(thumb.dataset.index, 10));
+    });
+
+    $('#featured-dots')?.addEventListener('click', e => {
+      const dot = e.target.closest('.featured-viewer__dot');
+      if (!dot) return;
+      goFeatured(0, parseInt(dot.dataset.index, 10));
     });
 
     /* Keyboard when viewer is focused */

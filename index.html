@@ -166,7 +166,7 @@
           </div>
           <div class="studio__portrait">
             <div class="studio__portrait-frame">
-              <img src="assets/team/yogesh-chavan.jpg" alt="Yogesh Chavan Associates interior design project showcase" width="600" height="750" loading="lazy">
+              <img src="assets/team/yogesh-chavan.jpg" alt="Ar. Yogesh Chavan, Founder and Principal Architect" width="600" height="750" loading="lazy">
             </div>
             <figcaption class="studio__caption">
               <strong>Ar. Yogesh Chavan</strong>
@@ -213,26 +213,41 @@
 
       <!-- Contained cinema viewer — explore inside the box; page scroll is never hijacked -->
       <div class="featured-viewer container" id="featured-viewer" tabindex="0" aria-roledescription="carousel" aria-label="Featured project gallery">
-        <p class="featured-viewer__hint" id="featured-hint">
-          <span aria-hidden="true">↔</span>
-          Scroll or swipe inside the frame to explore — your page scroll stays free
-        </p>
+        <div class="featured-viewer__toolbar">
+          <p class="featured-viewer__hint" id="featured-hint">
+            <span class="featured-viewer__hint-pulse" aria-hidden="true"></span>
+            Swipe or scroll inside the frame · 12 spaces to explore
+          </p>
+          <div class="featured-viewer__mobile-nav" aria-hidden="false">
+            <button type="button" class="featured-viewer__mob-btn" id="featured-mob-prev" aria-label="Previous">&#8249;</button>
+            <span class="featured-viewer__mob-counter" id="featured-mob-counter">01 / 12</span>
+            <button type="button" class="featured-viewer__mob-btn" id="featured-mob-next" aria-label="Next">&#8250;</button>
+          </div>
+        </div>
 
         <div class="featured-viewer__frame" id="featured-frame">
-          <div class="featured-viewer__slides" id="featured-slides" aria-live="polite">
-            <!-- Slides injected by JS -->
+          <div class="featured-viewer__progress" aria-hidden="true">
+            <div class="featured-viewer__progress-fill" id="featured-progress-fill"></div>
           </div>
 
-          <div class="featured-viewer__caption">
+          <div class="featured-viewer__slides" id="featured-slides" aria-live="polite">
+            <!-- Fallback visible before JS hydrates -->
+            <div class="featured-viewer__slide featured-viewer__slide--active" data-index="0">
+              <img src="assets/featured/showcase-01.jpg" alt="Curated interior collection — marble feature wall" width="1600" height="900" fetchpriority="high">
+            </div>
+          </div>
+
+          <div class="featured-viewer__caption" id="featured-caption">
             <span class="featured-viewer__counter" id="featured-counter">01 / 12</span>
-            <h3 class="featured-viewer__chapter-title" id="featured-chapter-title"></h3>
-            <p class="featured-viewer__chapter-text" id="featured-chapter-text"></p>
+            <h3 class="featured-viewer__chapter-title" id="featured-chapter-title">Marble Feature Wall</h3>
+            <p class="featured-viewer__chapter-text" id="featured-chapter-text">A living room anchored by a dramatic marble TV wall — fluted panels, warm wood, and soft peach tones.</p>
           </div>
 
           <button type="button" class="featured-viewer__arrow featured-viewer__arrow--prev" id="featured-prev" aria-label="Previous image">&#8249;</button>
           <button type="button" class="featured-viewer__arrow featured-viewer__arrow--next" id="featured-next" aria-label="Next image">&#8250;</button>
         </div>
 
+        <div class="featured-viewer__dots" id="featured-dots" role="tablist" aria-label="Slide indicators"></div>
         <div class="featured-viewer__thumbs" id="featured-thumbs" role="tablist" aria-label="Jump to image"></div>
       </div>
 
