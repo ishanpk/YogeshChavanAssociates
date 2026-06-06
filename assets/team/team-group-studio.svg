@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <rect width="800" height="450" fill="#1e1e1c"/>
+  <rect x="40" y="40" width="720" height="370" rx="6" fill="#2a2a28" stroke="#8B8680" stroke-opacity="0.3"/>
+  <circle cx="200" cy="200" r="55" fill="#8B8680" opacity="0.45"/>
+  <circle cx="320" cy="185" r="50" fill="#8B8680" opacity="0.4"/>
+  <circle cx="440" cy="200" r="55" fill="#8B8680" opacity="0.45"/>
+  <circle cx="560" cy="185" r="50" fill="#8B8680" opacity="0.4"/>
+  <rect x="130" y="270" width="140" height="90" rx="4" fill="#8B8680" opacity="0.25"/>
+  <rect x="250" y="260" width="140" height="100" rx="4" fill="#8B8680" opacity="0.22"/>
+  <rect x="370" y="270" width="140" height="90" rx="4" fill="#8B8680" opacity="0.25"/>
+  <rect x="490" y="260" width="140" height="100" rx="4" fill="#8B8680" opacity="0.22"/>
+  <text x="400" y="420" text-anchor="middle" fill="#8B8680" font-family="system-ui,sans-serif" font-size="14" opacity="0.6">Studio Team  replace with photo</text>
+</svg>

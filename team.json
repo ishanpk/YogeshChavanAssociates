@@ -1,11 +1,11 @@
 [
   {
     "id": "yogesh-chavan",
+    "tier": "lead",
     "name": "Ar. Yogesh Chavan",
-    "role": "Founder & Principal Architect",
+    "role": "Principal Architect",
     "bio": "Visionary architect shaping Maharashtra's built environment for over two decades.",
     "photo": "assets/team/yogesh-chavan.jpg",
-    "featured": true,
     "linkedin": "",
     "fullBio": {
       "education": "B.Arch — <!-- TODO: replace --> University Name",
@@ -15,42 +15,12 @@
     }
   },
   {
-    "id": "senior-architect",
-    "name": "<!-- TODO: replace --> Senior Architect Name",
-    "role": "Senior Architect",
-    "bio": "Leading design development and client coordination across residential and commercial projects.",
-    "photo": "assets/team/senior-architect.svg",
-    "featured": false,
-    "linkedin": "",
-    "fullBio": {
-      "education": "B.Arch — <!-- TODO: replace -->",
-      "specialization": "Commercial & Mixed-Use Design",
-      "notableProjects": ["Retail & Office Complex"],
-      "quote": "Every line on paper must earn its place on site."
-    }
-  },
-  {
-    "id": "interior-designer",
-    "name": "<!-- TODO: replace --> Interior Designer Name",
-    "role": "Interior Designer",
-    "bio": "Crafting immersive interior narratives through material, light, and spatial rhythm.",
-    "photo": "assets/team/interior-designer.svg",
-    "featured": false,
-    "linkedin": "",
-    "fullBio": {
-      "education": "B.Des Interior — <!-- TODO: replace -->",
-      "specialization": "Hospitality & Residential Interiors",
-      "notableProjects": ["Boutique Interior Suite", "Hospitality Lounge"],
-      "quote": "Interiors are where architecture meets the human touch."
-    }
-  },
-  {
-    "id": "structural-engineer",
-    "name": "<!-- TODO: replace --> Structural Engineer Name",
-    "role": "Structural Engineer",
-    "bio": "Ensuring structural integrity and innovation across all project typologies.",
+    "id": "chief-engineer",
+    "tier": "lead",
+    "name": "<!-- TODO: replace --> Chief Engineer Name",
+    "role": "Chief Engineer",
+    "bio": "Leading structural design and technical oversight across every project typology.",
     "photo": "assets/team/structural-engineer.svg",
-    "featured": false,
     "linkedin": "",
     "fullBio": {
       "education": "B.E. Civil — <!-- TODO: replace -->",
@@ -60,33 +30,19 @@
     }
   },
   {
-    "id": "project-manager",
-    "name": "<!-- TODO: replace --> Project Manager Name",
-    "role": "Project Manager",
-    "bio": "Orchestrating timelines, budgets, and stakeholder communication with precision.",
-    "photo": "assets/team/project-manager.svg",
-    "featured": false,
-    "linkedin": "",
-    "fullBio": {
-      "education": "B.Tech — <!-- TODO: replace -->",
-      "specialization": "Construction Management & Regulatory Liaison",
-      "notableProjects": ["Grand Hospitality Complex"],
-      "quote": "Great architecture is delivered, not just designed."
-    }
+    "id": "team-group-studio",
+    "tier": "group",
+    "name": "Studio Team",
+    "role": "Design · Interiors · Coordination",
+    "caption": "Architects, interior designers, and project managers collaborating in our Sangli studio.",
+    "photo": "assets/team/team-group-studio.svg"
   },
   {
-    "id": "site-supervisor",
-    "name": "<!-- TODO: replace --> Site Supervisor Name",
-    "role": "Site Supervisor",
-    "bio": "On-ground quality control ensuring every detail matches the design intent.",
-    "photo": "assets/team/site-supervisor.svg",
-    "featured": false,
-    "linkedin": "",
-    "fullBio": {
-      "education": "Diploma Civil — <!-- TODO: replace -->",
-      "specialization": "Site Execution & Quality Assurance",
-      "notableProjects": ["Courtyard Residence", "Urban Villa"],
-      "quote": "The drawing is a promise — the site is where we keep it."
-    }
+    "id": "team-group-site",
+    "tier": "group",
+    "name": "On-Site Team",
+    "role": "Execution · Quality · Supervision",
+    "caption": "Site engineers and supervisors ensuring every build matches the design intent.",
+    "photo": "assets/team/team-group-site.svg"
   }
 ]

@@ -37,7 +37,7 @@
     initHero();
     initScrollProgress();
     initCounters();
-    initProcessObserver();
+    initProcessJourney();
     initTestimonials();
     initLightbox();
     initContactForm();
@@ -437,50 +437,70 @@
   }
 
   /* =========================================================================
-     TEAM
+     TEAM — leads + group photos
      ========================================================================= */
   function renderTeam() {
-    const grid = $('#team-grid');
-    if (!grid) return;
+    const leadsEl = $('#team-leads');
+    const groupEl = $('#team-group');
+    if (!leadsEl || !groupEl) return;
 
-    grid.innerHTML = team.map(member => `
-      <article class="team-card${member.featured ? ' team-card--featured' : ''}"
-        role="listitem" tabindex="0" data-id="${member.id}">
-        <div class="team-card__photo">
-          <img src="${member.photo}" alt="${member.name}, ${member.role}" loading="lazy" width="600" height="750">
+    const leads = team.filter(m => m.tier === 'lead');
+    const groups = team.filter(m => m.tier === 'group');
+
+    leadsEl.innerHTML = leads.map(member => `
+      <article class="team-lead" role="listitem" tabindex="0" data-id="${member.id}">
+        <div class="team-lead__face">
+          <img src="${member.photo}" alt="${member.name}" loading="lazy" width="120" height="120">
         </div>
-        <div class="team-card__info">
-          <h3 class="team-card__name">${member.name}</h3>
-          <p class="team-card__role">${member.role}</p>
-          <p class="team-card__bio">${member.bio}</p>
+        <div class="team-lead__body">
+          <h3 class="team-lead__name">${member.name}</h3>
+          <p class="team-lead__role">${member.role}</p>
+          <span class="team-lead__tap">Tap for bio →</span>
         </div>
-        ${member.linkedin ? `<a href="${member.linkedin}" class="team-card__linkedin" target="_blank" rel="noopener" aria-label="${member.name} on LinkedIn" onclick="event.stopPropagation()">
-          <img src="assets/icons/linkedin.svg" alt="" width="18" height="18">
-        </a>` : ''}
       </article>
     `).join('');
 
-    $$('.team-card', grid).forEach(card => {
-      card.addEventListener('click', () => openTeamPanel(card.dataset.id));
+    groupEl.innerHTML = groups.map(group => `
+      <figure class="team-group-photo">
+        <div class="team-group-photo__img">
+          <img src="${group.photo}" alt="${group.name}" loading="lazy" width="800" height="450">
+        </div>
+        <figcaption class="team-group-photo__info">
+          <h3 class="team-group-photo__name">${group.name}</h3>
+          <p class="team-group-photo__role">${group.role}</p>
+          <p class="team-group-photo__caption">${group.caption}</p>
+        </figcaption>
+      </figure>
+    `).join('');
+
+    $$('.team-lead', leadsEl).forEach(card => {
+      const open = () => openTeamPanel(card.dataset.id);
+      card.addEventListener('click', open);
       card.addEventListener('keydown', e => {
-        if (e.key === 'Enter') openTeamPanel(card.dataset.id);
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          open();
+        }
       });
     });
   }
 
   function openTeamPanel(id) {
-    const member = team.find(m => m.id === id);
+    const member = team.find(m => m.id === id && m.tier === 'lead');
     if (!member) return;
 
     const panel = $('#team-panel');
+    const photo = $('.team-panel__photo', panel);
     const { fullBio } = member;
 
-    $('.team-panel__photo', panel).src = member.photo;
-    $('.team-panel__photo', panel).alt = member.name;
+    photo.src = member.photo;
+    photo.alt = member.name;
+    photo.classList.add('team-panel__photo--face');
     $('#team-panel-name').textContent = member.name;
     $('.team-panel__role', panel).textContent = member.role;
 
     $('.team-panel__details', panel).innerHTML = `
+      <p class="team-panel__bio">${member.bio}</p>
       <p><strong>Education:</strong> ${fullBio.education}</p>
       <p><strong>Specialization:</strong> ${fullBio.specialization}</p>
       <p><strong>Notable Projects:</strong> ${fullBio.notableProjects.join(', ')}</p>
@@ -680,19 +700,145 @@
   }
 
   /* =========================================================================
-     PROCESS — Intersection entrance
+     PROCESS — Interactive journey trail
      ========================================================================= */
-  function initProcessObserver() {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('process__step--visible'), i * 150);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.2 });
+  const PROCESS_STEPS = [
+    {
+      number: '01',
+      milestone: 'Discovery',
+      title: 'Consultation & Site Visit',
+      summary: 'We listen to your vision, assess the site, and align on scope, budget, and timeline.',
+      icon: 'assets/icons/process-consult.svg'
+    },
+    {
+      number: '02',
+      milestone: 'Concept',
+      title: 'Concept & Design Development',
+      summary: 'Sketches, 3D views, and material palettes translate ideas into a space you can feel.',
+      icon: 'assets/icons/process-design.svg'
+    },
+    {
+      number: '03',
+      milestone: 'Documentation',
+      title: 'Detailed Drawings & Approvals',
+      summary: 'Working drawings, structural design, and liaison with authorities — handled end to end.',
+      icon: 'assets/icons/process-drawings.svg'
+    },
+    {
+      number: '04',
+      milestone: 'Delivery',
+      title: 'Execution & Handover',
+      summary: 'On-site supervision and quality checks until your keys are in hand.',
+      icon: 'assets/icons/process-execution.svg'
+    }
+  ];
 
-    $$('.process__step').forEach(step => observer.observe(step));
+  const PROCESS_BADGES = [
+    'Start your journey',
+    'First milestone unlocked',
+    'Halfway there — great progress!',
+    'Almost at handover',
+    'Process complete — ready to build?'
+  ];
+
+  function initProcessJourney() {
+    const trail = $('#process-trail');
+    const stage = $('#process-stage');
+    const badge = $('#process-badge');
+    const count = $('#process-count');
+    const prevBtn = $('#process-prev');
+    const nextBtn = $('#process-next');
+    if (!trail || !stage) return;
+
+    let current = 0;
+    const visited = new Set([0]);
+
+    trail.innerHTML = PROCESS_STEPS.map((step, i) => `
+      <button type="button" class="process-journey__node${i === 0 ? ' process-journey__node--active' : ''}${i === 0 ? ' process-journey__node--visited' : ''}"
+        role="tab" data-step="${i}" aria-selected="${i === 0}" aria-controls="process-stage" id="process-tab-${i}">
+        <span class="process-journey__node-ring">
+          <img class="process-journey__node-icon" src="${step.icon}" alt="" width="20" height="20">
+          <span class="process-journey__node-check" aria-hidden="true">✓</span>
+        </span>
+        <span class="process-journey__node-label">${step.milestone}</span>
+      </button>
+    `).join('');
+
+    const fill = document.createElement('div');
+    fill.className = 'process-journey__trail-fill';
+    fill.setAttribute('aria-hidden', 'true');
+    trail.insertBefore(fill, trail.firstChild);
+
+    function renderStep(index) {
+      const step = PROCESS_STEPS[index];
+      stage.innerHTML = `
+        <article class="process-journey__card">
+          <div class="process-journey__card-header">
+            <img class="process-journey__card-icon" src="${step.icon}" alt="" width="40" height="40">
+            <div>
+              <span class="process-journey__card-number">Step ${step.number}</span>
+              <h3 class="process-journey__card-title">${step.title}</h3>
+              <span class="process-journey__card-milestone">${step.milestone}</span>
+            </div>
+          </div>
+          <p>${step.summary}</p>
+        </article>
+      `;
+    }
+
+    function updateTrail() {
+      const nodes = $$('.process-journey__node', trail);
+      const total = PROCESS_STEPS.length;
+      const progress = total > 1 ? current / (total - 1) : 0;
+      const isMobile = window.matchMedia('(max-width: 639px)').matches;
+
+      nodes.forEach((node, i) => {
+        node.classList.toggle('process-journey__node--active', i === current);
+        node.classList.toggle('process-journey__node--visited', visited.has(i));
+        node.setAttribute('aria-selected', String(i === current));
+      });
+
+      if (isMobile) {
+        fill.style.height = `${progress * 100}%`;
+        fill.style.width = '2px';
+      } else {
+        fill.style.width = `${progress * 76}%`;
+        fill.style.height = '2px';
+      }
+
+      prevBtn.disabled = current === 0;
+      nextBtn.textContent = current === total - 1 ? 'Start again' : 'Next step →';
+
+      const explored = visited.size;
+      count.textContent = `${explored} of ${total} explored`;
+      badge.textContent = explored === total ? PROCESS_BADGES[4] : PROCESS_BADGES[Math.min(explored, PROCESS_BADGES.length - 2)];
+      badge.classList.toggle('process-journey__badge--complete', explored === total);
+    }
+
+    function goToStep(index) {
+      current = (index + PROCESS_STEPS.length) % PROCESS_STEPS.length;
+      visited.add(current);
+      renderStep(current);
+      updateTrail();
+    }
+
+    renderStep(0);
+    updateTrail();
+
+    $$('.process-journey__node', trail).forEach(node => {
+      node.addEventListener('click', () => goToStep(Number(node.dataset.step)));
+    });
+
+    prevBtn?.addEventListener('click', () => {
+      if (current > 0) goToStep(current - 1);
+    });
+
+    nextBtn?.addEventListener('click', () => {
+      if (current < PROCESS_STEPS.length - 1) goToStep(current + 1);
+      else goToStep(0);
+    });
+
+    window.addEventListener('resize', updateTrail, { passive: true });
   }
 
   /* =========================================================================
