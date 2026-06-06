@@ -140,11 +140,25 @@ Until configured, the form falls back to opening a `mailto:` link.
 
 ## Deploying to GitHub Pages
 
-1. Push all files to the `main` branch of [https://github.com/ishanpk/YogeshChavanAssociates](https://github.com/ishanpk/YogeshChavanAssociates)
-2. Go to **Repository Settings → Pages**
-3. Set **Source** to `Deploy from a branch`
-4. Select branch: `main`, folder: `/ (root)`
-5. Click **Save** — site will be live at `https://ishanpk.github.io/YogeshChavanAssociates/` within 1–2 minutes
+The repo includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) that auto-deploys on every push to `main`.
+
+### One-time setup (repo admin required)
+
+1. Open **[Settings → Pages](https://github.com/ishanpk/YogeshChavanAssociates/settings/pages)**
+2. Under **Build and deployment → Source**, select **GitHub Actions**
+3. Re-run the failed workflow at **[Actions](https://github.com/ishanpk/YogeshChavanAssociates/actions)** → *Deploy to GitHub Pages* → **Re-run all jobs**
+
+The site will be live at **https://ishanpk.github.io/YogeshChavanAssociates/** within 1–2 minutes.
+
+> **Note:** Enabling Pages requires admin access on the `ishanpk/YogeshChavanAssociates` repo. After the one-time setup, every `git push` to `main` deploys automatically.
+
+### Alternative: branch-based deploy
+
+If you prefer branch deploy instead of Actions:
+
+1. **Settings → Pages → Source:** `Deploy from a branch`
+2. Branch: `main`, folder: `/ (root)`
+3. Click **Save**
 
 ---
 
